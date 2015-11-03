@@ -1,0 +1,49 @@
+DriveAuto (Wayne & Jerry)
+	Encoders(leftEncoder, rightEncoder)
+	Motors(leftMotor, rightMotor)
+	void DriveStraight(double distance, double speed)
+		drive straight
+		Encoders
+	void Turn(double angle)
+		Encoder
+
+David T
+
+AllianceButton(string allianceColor) (Maxim and Matthew)
+	RGB(rGBSensor)
+	Ultrasonic(ultrasonic1)
+	Motors(reference DriveAuto)
+	boolean checkColor()
+		RGB & check if correct color
+	void SwapLight()
+		Alliance Color to dertermine route
+		Changes button robot is in front of
+	void hitButton()
+		uses ultrasonic
+		hits button SLOWLY
+
+Climbers (Alec and Newman)
+	Motor(elevatorMotor)
+	Servo(dumpServo)
+	void dumpPlatform()
+		servo lower platform
+	void resetPlatform()
+		puts platform parallel to floor
+	void raisePlatform()
+		uses both motors
+	void lowerPlatform()
+		uses both motors
+
+PullUpBar(Justin & Wesley)
+	Motor(leftPullUpMotor, RightPullUpMotor)
+	Servo(leftSwing, rightSwing)
+	void Extend()
+		extends pull up arm
+		uses both motors
+	void Retract()
+		retracts pull up arms
+		uses both motors
+	void SwingUp()
+		servo set = 90
+	void SwingDown()
+		servo set = 0
