@@ -1,16 +1,25 @@
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotor.*;
+		double start = leftMotor.getCurrentPosition();
+		leftMotor.setPower(0);
+		rightMotor.setPower(0);
+
+		double targetValue = ((ROBOT_WIDTH * Math.PI) * (angle / 360)) / TREAD_LENGTH;
+
+		targetValue += start;
 
 public class PantherDriveAuto
 {
 	public DcMotor leftMotor;
     public DcMotor rightMotor;
 
-    leftMotor = hardwareMap.dcMotor.get("leftMotor");
-    rightMotor = hardwareMap.dcMotor.get("frontLeft");
-
     double TREAD_LENGTH = 36.25; 
     double ROBOT_WIDTH = 15.25;
+
+    public PantherDriveAuto(HardwareMap hardwareMap) 
+    {
+    leftMotor = hardwareMap.dcMotor.get("leftMotor");
+    rightMotor = hardwareMap.dcMotor.get("frontLeft");
+    }
 
 	public void driveStraight(double distance, double speed) //distance is in inches
 	{
@@ -36,7 +45,7 @@ public class PantherDriveAuto
 		double targetValue = ((ROBOT_WIDTH * Math.PI) * (angle / 360)) / TREAD_LENGTH;
 
 		targetValue += start;
-
+		
 		while(leftMotor.getCurrentPosition() < targetValue)
 		{
 			leftMotor.setPower(0.5);
