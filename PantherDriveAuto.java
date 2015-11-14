@@ -1,11 +1,4 @@
 import com.qualcomm.robotcore.hardware.DcMotor.*;
-		double start = leftMotor.getCurrentPosition();
-		leftMotor.setPower(0);
-		rightMotor.setPower(0);
-
-		double targetValue = ((ROBOT_WIDTH * Math.PI) * (angle / 360)) / TREAD_LENGTH;
-
-		targetValue += start;
 
 public class PantherDriveAuto
 {
@@ -45,7 +38,7 @@ public class PantherDriveAuto
 		double targetValue = ((ROBOT_WIDTH * Math.PI) * (angle / 360)) / TREAD_LENGTH;
 
 		targetValue += start;
-		
+
 		while(leftMotor.getCurrentPosition() < targetValue)
 		{
 			leftMotor.setPower(0.5);
