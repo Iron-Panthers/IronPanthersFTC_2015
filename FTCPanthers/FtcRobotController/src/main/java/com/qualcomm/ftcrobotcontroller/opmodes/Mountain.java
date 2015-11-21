@@ -5,14 +5,14 @@ public class Mountain
 
 	public void climb()
 	{
-		while(!(allianceButton.checkDist() < 20 && allianceButton.checkDist() > 18))
+		while(!(allianceButton.checkDist() > 10))
 		{
 			driveAuto.driveStraight(1, 1);
 		}
 	}
 	public void backClimb()
 	{
-		while(!(allianceButton.checkDist() < 20 && allianceButton.checkDist() > 18))
+		while(!(allianceButton.checkDist() > 10))
 		{
 			driveAuto.driveStraight(-1, 1);
 		}
