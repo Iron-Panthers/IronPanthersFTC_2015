@@ -4,45 +4,35 @@ import com.qualcomm.robotcore.hardware.*;
 
 public class PullUpBar
 {
-	public static final String SERVO_L = "leftPullupServo";
-	public static final String SERVO_R = "leftPullupServo";
+	public static final String PULLUP_SERVO = "pullupServo";
 
-	public static final String MOTOR_L = "leftPullupMotor";
-	public static final String MOTOR_R = "rightPullupMotor";
+	public static final String PULLUP_MOTOR = "pullupMotor";
 
-	public Servo servoL;
-    public Servo servoR;
-	public DcMotor motorL;
-    public DcMotor motorR;
+	public Servo pullUpServo;
+	public DcMotor pullupMotor;
 
 	public PullUpBar(HardwareMap hardwareMap) {
-		servoL = hardwareMap.servo.get(SERVO_L);
-		servoR = hardwareMap.servo.get(SERVO_R);
-		motorL = hardwareMap.dcMotor.get(MOTOR_L);
-		motorR = hardwareMap.dcMotor.get(MOTOR_R);
+		pullUpServo = hardwareMap.servo.get(PULLUP_SERVO);
+		pullupMotor = hardwareMap.dcMotor.get(PULLUP_MOTOR);
 	}
 
-	public void swingArmsOut()
+	public void swingArmOut()
 	{
-		servoL.setPosition(1.0);
-        servoR.setPosition(1.0);
+		pullUpServo.setPosition(1.0);
 	}
 
-	public void swingArmsIn()
+	public void swingArmIn()
 	{
-        servoL.setPosition(0.0);
-        servoR.setPosition(0.0);
+        pullUpServo.setPosition(0.0);
 	}
 
-	public void retractArms()
+	public void retractArm()
 	{
-        motorL.setPower(-1.0);
-        motorR.setPower(-1.0);
+        pullupMotor.setPower(-1.0);
 	}
 
-	public void extendArms()
+	public void extendArm()
 	{
-        motorL.setPower(1.0);
-        motorR.setPower(1.0);
+        pullupMotor.setPower(1.0);
 	}
 }

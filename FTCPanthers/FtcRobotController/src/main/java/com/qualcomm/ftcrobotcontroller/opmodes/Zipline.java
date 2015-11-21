@@ -13,7 +13,7 @@ public class Zipline
     public static final double LEFT_OUT_POSITION = 1.0;
     public static final double LEFT_IN_POSITION = 0.5;
 
-    public static final double RIGHT_OUT_POSITION = 0.0;
+    public static final double RIGHT_OUT_POSITION = 1.0;
     public static final double RIGHT_IN_POSITION = 0.5;
 
     public boolean leftOut = false;
@@ -27,7 +27,7 @@ public class Zipline
 
     public void setRightServoOut()
     {
-        leftServo.setPosition(RIGHT_OUT_POSITION);
+        rightServo.setPosition(RIGHT_OUT_POSITION);
     }
 
     public void setRightServoIn()
@@ -42,7 +42,7 @@ public class Zipline
 
     public void setLeftServoIn()
     {
-        rightServo.setPosition(LEFT_IN_POSITION);
+        leftServo.setPosition(LEFT_IN_POSITION);
     }
 
     public void resetServos()

@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class PantherRobot extends PushBotTelemetry
 {
-
     public DcMotor frontLeftMotor;
     public DcMotor backLeftMotor;
 
@@ -25,49 +24,56 @@ public class PantherRobot extends PushBotTelemetry
         frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
         backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
 
-        joystick = new Joystick(gamepad1);
+        //joystick = new Joystick(gamepad1);
         zipline = new Zipline(hardwareMap);
-        pullupBar = new PullUpBar(hardwareMap);
+        zipline.resetServos();
+        //pullupBar = new PullUpBar(hardwareMap);
     }
 
     @Override public void loop () {
-        frontLeftMotor.setPower(-joystick.leftStickY());
-        backLeftMotor.setPower(-joystick.leftStickY());
 
-        frontRightMotor.setPower(joystick.rightStickY());
-        backRightMotor.setPower(joystick.rightStickY());
+        frontLeftMotor.setPower(-(gamepad1.left_stick_y));
+        backLeftMotor.setPower(-gamepad1.left_stick_y);
 
-        if (joystick.leftBumper()) {
+        frontRightMotor.setPower(gamepad1.right_stick_y);
+        backRightMotor.setPower(gamepad1.right_stick_y);
+
+        if (gamepad1.left_bumper) {
             zipline.toggleLeft();
         }
 
-        if (joystick.rightBumper()) {
+        if (gamepad1.right_bumper) {
             zipline.toggleRight();
         }
 
-        if(joystick.buttonA())
+        /*if(joystick.buttonA())
         {
-            pullupBar.retractArms();
+            pullupBar.retractArm();
         }
 
         if (joystick.buttonX())
         {
-            pullupBar.extendArms();
+            pullupBar.extendArm();
         }
 
         if(joystick.buttonB())
         {
-            pullupBar.swingArmsIn();
+            pullupBar.swingArmIn();
         }
 
         if (joystick.buttonY())
         {
-            pullupBar.swingArmsOut();
+            pullupBar.swingArmOut();
         }
 
-        if (joystick.back()) //Resets all servos and motors
+*/
+        if (gamepad1.back) //Resets all servos and motors
         {
             zipline.resetServos();
+            frontLeftMotor.setPower(0);
+            frontRightMotor.setPower(0);
+            backLeftMotor.setPower(0);
+            backRightMotor.setPower(0);
         }
     }
 }

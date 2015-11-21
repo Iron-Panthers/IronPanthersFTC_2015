@@ -9,8 +9,10 @@ public class DriveAuto
     public DcMotor backLeft;
     public DcMotor backRight;
 
-	public static final double BACK_WHEEL_DIAMETER = 4; //need to confirm
+	public static final double SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION = 2.6 * Math.PI; //need to confirm
+    public static final double BACK_WHEEL_DIAMETER = 5;
 	public static final double ROBOT_WIDTH = 18;
+	public static final double TRACK_lENGTH = 36; //in inches
 
 	public DriveAuto(HardwareMap hardwareMap)
 	{
