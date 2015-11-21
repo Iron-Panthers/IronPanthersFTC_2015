@@ -88,4 +88,19 @@ public class DriveAuto
         frontRight.setPower(0);
         backRight.setPower(0);
 	}
+	
+	public void wait(double seconds)
+	{
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
+        backRight.setPower(0);
+		
+		ElapsedTime elapsedTime = new ElapsedTime();
+		elapsedTime.startTime();
+		while(elapsedTime.time < seconds)
+		{
+			
+		}
+	}
 }
