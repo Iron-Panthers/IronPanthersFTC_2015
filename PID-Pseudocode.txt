@@ -1,0 +1,52 @@
+/**************************************************************************************
+
+	Maxim's pseudocode for the PID
+
+**************************************************************************************/
+
+SPEED_WAIT_TIME = 0.05
+
+/**
+	left, right in rotations/second
+*/
+double[] getSpeed() { 
+	double startl = left.getPos()
+	double startr = right.getPos()
+	wait(SPEED_WAIT_TIME);
+	return {(left.getPos() - startl)/SPEED_WAIT_TIME, (right.getPos() - startr)/SPEED_WAIT_TIME}
+}
+
+/**
+	threshold = maximum % deviation allowed
+*/
+void drivePID(time, threshold, power) { 
+	DcMotor slave, master
+	right.setPower(power)
+	left.setPower(power)
+
+	speeds = getSpeed()
+	if speeds[0] > speeds[1] {
+		slave = left
+		master = right
+	} else {
+		slave = right
+		master = left
+	}
+
+	double adj = -1 //the adjustment in power per second
+	start = currenttime()
+	while (currenttime() < start + time) {
+		speeds = getSpeed()
+		if (speed[master]*(1-threshold) < speed[slave] < speed[master]*(1+threshold)) { //check if speed is in threshold
+			continue //keep going through the loop until the actual time is hit, don't do anything else
+		}
+		slave.setpower(slave.getpower() + adj/dt) //dt is delta time, how long each iteration of loop took
+		if (overshot) { //not a real boolean
+			adj *= -0.25 
+		}
+	}
+
+	right.setPower(0)
+	left.setPower(0)
+
+}
