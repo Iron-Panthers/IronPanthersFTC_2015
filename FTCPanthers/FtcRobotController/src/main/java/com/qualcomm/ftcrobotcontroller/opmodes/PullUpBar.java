@@ -11,6 +11,8 @@ public class PullUpBar
 	public Servo pullUpServo;
 	public DcMotor pullupMotor;
 
+    boolean armOut = false;
+
 	public PullUpBar(HardwareMap hardwareMap) {
 		pullUpServo = hardwareMap.servo.get(PULLUP_SERVO);
 		pullupMotor = hardwareMap.dcMotor.get(PULLUP_MOTOR);
@@ -25,6 +27,10 @@ public class PullUpBar
 	{
         pullUpServo.setPosition(0.0);
 	}
+    public void stopArm()
+    {
+        pullUpServo.setPosition(0.5);
+    }
 
 	public void retractArm()
 	{
@@ -35,4 +41,8 @@ public class PullUpBar
 	{
         pullupMotor.setPower(1.0);
 	}
+    public void stopClaw() {
+        pullupMotor.setPower(0.0);
+    }
+
 }

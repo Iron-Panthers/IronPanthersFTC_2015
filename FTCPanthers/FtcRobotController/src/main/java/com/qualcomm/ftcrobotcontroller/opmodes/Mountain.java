@@ -1,20 +1,37 @@
+package com.qualcomm.ftcrobotcontroller.opmodes;
+
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.*;
+
 public class Mountain
 {
-	AllianceButton allianceButton = new AllianceButton();
-	DriveAuto driveAuto = new driveAuto();
+
+	public DriveAuto driveAuto;
+
+	public static final String ULTRASONIC_SENSOR = "ultrasonic";
+
+	public UltrasonicSensor ultrasonic;
+
+	public Mountain(HardwareMap hardwareMap)
+	{
+		driveAuto = new DriveAuto(hardwareMap);
+		ultrasonic = hardwareMap.ultrasonicSensor.get(ULTRASONIC_SENSOR);
+	}
 
 	public void climb()
 	{
-		while(!(allianceButton.checkDist() > 10))
+		while((ultrasonic.getUltrasonicLevel() < 10))
 		{
-			driveAuto.driveStraight(1, 1);
+			driveAuto.moveFowards(1.0);
 		}
+		driveAuto.moveFowards(0.0);
 	}
 	public void backClimb()
 	{
-		while(!(allianceButton.checkDist() > 10))
+		while((ultrasonic.getUltrasonicLevel() < 10))
 		{
-			driveAuto.driveStraight(-1, 1);
+			driveAuto.moveFowards(-1.0);
 		}
+		driveAuto.moveFowards(0.0);
 	}
 }

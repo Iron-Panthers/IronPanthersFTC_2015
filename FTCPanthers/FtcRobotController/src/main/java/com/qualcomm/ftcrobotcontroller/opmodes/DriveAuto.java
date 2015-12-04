@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class DriveAuto
 {
@@ -9,22 +10,31 @@ public class DriveAuto
     public DcMotor backLeft;
     public DcMotor backRight;
 
-	public static final double SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION = 2.6 * Math.PI; //need to confirm
-    public static final double BACK_WHEEL_DIAMETER = 5;
+	public static final double SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION = 36/(2.6 * Math.PI); //need to confirm
 	public static final double ROBOT_WIDTH = 18;
 	public static final double TRACK_lENGTH = 36; //in inches
 
+
 	public DriveAuto(HardwareMap hardwareMap)
 	{
-		frontLeft = hardwareMap.dcMotor.get("frontLeft");
-	    frontRight = hardwareMap.dcMotor.get("frontRight");
-	    backLeft = hardwareMap.dcMotor.get("backLeft");
-	    backRight = hardwareMap.dcMotor.get("backRight");
+        frontLeft = hardwareMap.dcMotor.get("frontLeft");
+        frontRight = hardwareMap.dcMotor.get("frontRight");
+        backLeft = hardwareMap.dcMotor.get("backLeft");
+        backRight = hardwareMap.dcMotor.get("backRight");
 	}
+
+    public void moveFowards(double power)
+    {
+        backLeft.setPower(-power);
+        frontLeft.setPower(-power);
+        backRight.setPower(power);
+        frontRight.setPower(power);
+    }
 
 	public void driveStraight(double distance, double power) //distance is in inches
 	{
-		double targetValue = distance/(BACK_WHEEL_DIAMETER * Math.PI);
+		double targetValue = distance*SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION/TRACK_lENGTH;
+        // IF TARGETVALUE = 1440 = 1 REV.
 		double leftStart = backLeft.getCurrentPosition();
         double rightStart = backRight.getCurrentPosition();
 
@@ -50,7 +60,7 @@ public class DriveAuto
 		double leftStart = backLeft.getCurrentPosition();
         double rightStart = backRight.getCurrentPosition();
 
-		double targetValue = ((ROBOT_WIDTH * Math.PI) * (angle / 360)) / BACK_WHEEL_DIAMETER * Math.PI;
+		double targetValue = ((ROBOT_WIDTH * Math.PI) * (angle / 360)) * SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION/TRACK_lENGTH;
 
 		double leftTargetValue = leftStart - targetValue; //negatives in place due to motor sides and turn direction
         double rightTargetValue = rightStart - targetValue;
@@ -73,7 +83,7 @@ public class DriveAuto
         double leftStart = backLeft.getCurrentPosition();
         double rightStart = backRight.getCurrentPosition();
 
-        double targetValue = ((ROBOT_WIDTH * Math.PI) * (angle / 360)) / BACK_WHEEL_DIAMETER * Math.PI;
+        double targetValue = ((ROBOT_WIDTH * Math.PI) * (angle / 360)) * SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION/TRACK_lENGTH;
 
         double leftTargetValue = leftStart + targetValue; //negatives in place due to motor sides and turn direction
         double rightTargetValue = rightStart + targetValue;
@@ -99,8 +109,8 @@ public class DriveAuto
         backRight.setPower(0);
 		
 		ElapsedTime elapsedTime = new ElapsedTime();
-		elapsedTime.startTime();
-		while(elapsedTime.time < seconds)
+        elapsedTime.startTime();
+		while(elapsedTime.time() < seconds)
 		{
 			
 		}

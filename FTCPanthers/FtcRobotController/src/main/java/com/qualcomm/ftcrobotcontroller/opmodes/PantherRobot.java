@@ -5,75 +5,97 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class PantherRobot extends PushBotTelemetry
 {
-    public DcMotor frontLeftMotor;
-    public DcMotor backLeftMotor;
+    public DcMotor frontLeft;
+    public DcMotor backLeft;
 
-    public DcMotor frontRightMotor;
-    public DcMotor backRightMotor;
+    public DcMotor frontRight;
+    public DcMotor backRight;
 
     public Joystick joystick;
     public Zipline zipline;
     public PullUpBar pullupBar;
+    public DebrisPusher debrisPusher;
 
     public PantherRobot(){}
 
     @Override public void init()
     {
-        frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
-        backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
-        frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
-        backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
+        frontLeft = hardwareMap.dcMotor.get("frontLeft");
+        backLeft = hardwareMap.dcMotor.get("backLeft");
+        frontRight = hardwareMap.dcMotor.get("frontRight");
+        backRight = hardwareMap.dcMotor.get("backRight");
 
-        //joystick = new Joystick(gamepad1);
         zipline = new Zipline(hardwareMap);
         zipline.resetServos();
-        //pullupBar = new PullUpBar(hardwareMap);
+        pullupBar = new PullUpBar(hardwareMap);
+        pullupBar.stopArm();
+        debrisPusher = new DebrisPusher(hardwareMap);
+        debrisPusher.setDebrisUp();
     }
 
     @Override public void loop () {
 
-        frontLeftMotor.setPower(-(gamepad1.left_stick_y));
-        backLeftMotor.setPower(-gamepad1.left_stick_y);
+        frontLeft.setPower(-gamepad1.left_stick_y);
+        backLeft.setPower(-gamepad1.left_stick_y);
 
-        frontRightMotor.setPower(gamepad1.right_stick_y);
-        backRightMotor.setPower(gamepad1.right_stick_y);
+        frontRight.setPower(gamepad1.right_stick_y);
+        backRight.setPower(gamepad1.right_stick_y);
 
-        if (gamepad1.left_bumper) {
+        if (gamepad2.y || gamepad1.y) {
             zipline.toggleLeft();
         }
 
-        if (gamepad1.right_bumper) {
+        if (gamepad2.b || gamepad1.b) {
             zipline.toggleRight();
         }
 
-        /*if(joystick.buttonA())
+        if(gamepad1.dpad_up || gamepad2.dpad_up)
         {
-            pullupBar.retractArm();
+            debrisPusher.setDebrisUp();
         }
 
-        if (joystick.buttonX())
+        if(gamepad1.dpad_down || gamepad2.dpad_down)
+        {
+            debrisPusher.setDebrisDown();
+        }
+
+        if(gamepad2.right_trigger > 0.1 || gamepad1.right_trigger > 0.1) {
+            pullupBar.swingArmIn();
+        }
+
+        else if(gamepad2.left_trigger > 0.1 || gamepad1.left_trigger > 0.1)
+        {
+            pullupBar.swingArmOut();
+        }
+        else
+        {
+            pullupBar.stopArm();
+        }
+
+        if(gamepad2.left_bumper || gamepad1.left_bumper)
         {
             pullupBar.extendArm();
         }
 
-        if(joystick.buttonB())
+        else if(gamepad2.right_bumper || gamepad1.right_bumper)
         {
-            pullupBar.swingArmIn();
+            pullupBar.retractArm();
+        }
+        else
+        {
+            pullupBar.stopClaw();
         }
 
-        if (joystick.buttonY())
-        {
-            pullupBar.swingArmOut();
-        }
-
-*/
         if (gamepad1.back) //Resets all servos and motors
         {
             zipline.resetServos();
-            frontLeftMotor.setPower(0);
-            frontRightMotor.setPower(0);
-            backLeftMotor.setPower(0);
-            backRightMotor.setPower(0);
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            //pullupBar.stopArm();
+            //pullupBar.stopClaw();
+            debrisPusher.setDebrisUp();
         }
     }
 }
