@@ -9,8 +9,7 @@ public class Move extends Routine {
     public static final double ENCODER_VALUE_PER_REVOLUTION = 1440; // NEED TO CONFIRM STILL
     public static double ENCODER_VALUE_PER_TRACK_REVOLUTION;
     public static double ENCODER_VALUE_PER_INCH;
-    //public static final double SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION = 1440; //STILL NEED TO CONFIRM
-    // APPARENTLY, THIS IS ACTUALLY 1440
+
     public static final double ROBOT_WIDTH = 18;
     public static final double TRACK_lENGTH = 36; //in inches
 
