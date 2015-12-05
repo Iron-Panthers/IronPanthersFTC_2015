@@ -7,9 +7,11 @@ import com.qualcomm.robotcore.hardware.*;
 public class Move extends Routine {
     public static final double SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION = 36/(2.6 * Math.PI); //need to confirm
     public static final double ENCODER_VALUE_PER_REVOLUTION = 1440; // NEED TO CONFIRM STILL
+    public static double ENCODER_VALUE_PER_DEGREE; //CHANGES IF ABOVE VALUE IS CHANGED
     public static double ENCODER_VALUE_PER_TRACK_REVOLUTION;
     public static double ENCODER_VALUE_PER_INCH;
-
+    //public static final double SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION = 1440; //STILL NEED TO CONFIRM
+    // APPARENTLY, THIS IS ACTUALLY 1440
     public static final double ROBOT_WIDTH = 18;
     public static final double TRACK_lENGTH = 36; //in inches
 
@@ -31,11 +33,14 @@ public class Move extends Routine {
     private boolean rightShouldMove = true;
     private boolean leftShouldMove = true;
 
-    public Move(double inchesDistance, double pwr, HardwareMap map){
+    private boolean needsStart = true;
+
+    public Move(double inchesDistance, double pwr, HardwareMap map, PID pid){
         distance = inchesDistance;
         power = pwr;
         ENCODER_VALUE_PER_TRACK_REVOLUTION = ENCODER_VALUE_PER_REVOLUTION * SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION;
         ENCODER_VALUE_PER_INCH = ENCODER_VALUE_PER_TRACK_REVOLUTION / TRACK_lENGTH;
+        ENCODER_VALUE_PER_DEGREE = ENCODER_VALUE_PER_REVOLUTION / 360;
 
         targetValue = distance*SPROCKET_REVOLUTIONS_PER_TRACK_REVOLUTION/TRACK_lENGTH;
 
