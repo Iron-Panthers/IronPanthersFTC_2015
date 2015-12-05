@@ -17,7 +17,20 @@ public class Queue {
         tasks.remove(0);
     }
 
-    public void update(){
+    private Routine currentTask(){
+        return tasks.get(0);
+    }
 
+    public void update(){
+        if (tasks.size() == 0){
+            return;
+        }
+
+        Routine cur = currentTask();
+        boolean taskFinished = cur.update();
+
+        if (taskFinished){
+            shift();
+        }
     }
 }
