@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 
+import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.*;
 
@@ -8,15 +9,17 @@ import com.qualcomm.robotcore.hardware.*;
 
 public class PushBotAuto extends PushBotTelemetry
 {
-    public Move move;
+    public DcMotor aMotor;
 
     @Override public void start () {
-        move = new Move(60.0, 1.0, hardwareMap);
+        aMotor = hardwareMap.dcMotor.get("frontRight");
     }
 
     @Override public void loop ()
     {
-        move.update();
+        aMotor.setPower(1);
+        Integer instance2 = new Integer(aMotor.getCurrentPosition());
+        DbgLog.msg("ENCO RIGHT:" + String.valueOf(instance2));
     }
  } //
 

@@ -1,5 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.hardware.DcMotor;
 //import com.qualcomm.ftccommon.DbgLog;
 
@@ -41,6 +42,10 @@ public class PantherRobot extends PushBotTelemetry
         frontRight.setPower(gamepad1.right_stick_y);
         backRight.setPower(gamepad1.right_stick_y);
 
+        Integer instance = new Integer(backLeft.getCurrentPosition());
+        Integer instance2 = new Integer(backRight.getCurrentPosition());
+        DbgLog.msg("ENCO LEFT:"+String.valueOf(instance));
+        DbgLog.msg("ENCO RIGHT:"+String.valueOf(instance2));
         if (gamepad2.y || gamepad1.y) {
             zipline.toggleLeft();
         }
